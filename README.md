@@ -37,7 +37,7 @@ To run the Weather App on your local machine:
 
 ## Contributors
 
-- [Your Name] - Initial work
+Moamin Al-Juboori
 
 ## License
 
