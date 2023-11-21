@@ -27,7 +27,9 @@ To run the Weather App on your local machine:
 
 ## Screenshot
 
-![Weather App Interface](image.png)
+![image](https://github.com/AmooniG/WeatherApp/assets/111950883/80364724-f2e2-4566-9b51-f7892e7fa32d)
+
+
 
 ## Technologies Used
 
