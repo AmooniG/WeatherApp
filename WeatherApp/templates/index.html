@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Weather App</h1>
+    <form id="weatherForm">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+    <div id="weatherResult"></div>
+
+    <script>
+        document.getElementById('weatherForm').onsubmit = function(event) {
+            event.preventDefault();
+            const city = event.target.city.value;
+            fetch(`/weather`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `city=${encodeURIComponent(city)}`
+            }).then(response => response.json())
+            .then(data => {
+                if(data.error) {
+                    document.getElementById('weatherResult').innerHTML = `<p>Error: ${data.error}</p>`;
+                } else {
+                    document.getElementById('weatherResult').innerHTML = `
+                        <h2>Weather in ${data.name}, ${data.sys.country}</h2>
+                        <p><strong>${data.weather[0].main}</strong>: ${data.weather[0].description}</p>
+                        <p><strong>Temperature</strong>: ${data.main.temp} °C</p>
+                        <p><strong>Feels Like</strong>: ${data.main.feels_like} °C</p>
+                        <p><strong>Humidity</strong>: ${data.main.humidity}%</p>
+                        <p><strong>Wind Speed</strong>: ${data.wind.speed} m/s</p>
+                    `;
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                document.getElementById('weatherResult').textContent = 'An error occurred while fetching the weather data. Check console for more details.';
+            });
+        };
+    </script>
+</body>
+</html>
